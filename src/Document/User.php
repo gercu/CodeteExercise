@@ -14,46 +14,49 @@ class User implements UserInterface, \Serializable {
     /**
      * @MongoDB\Id
      */
-    protected $userId;
+    private $userId;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $username;
+    private $username;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $email;
+    private $email;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $password;
+    private $password;
 
     /**
      * @MongoDB\Field(type="string")
      */
-    protected $salt;
+    private $salt;
 
     /**
      * @MongoDB\Field(type="collection")
      */
-    protected $roles = array();
+    private $roles;
 
     /**
      * @MongoDB\Field(type="date")
      */
-    protected $createDate;
+    private $createDate;
 
     /**
      * @MongoDB\Field(type="boolean")
      */
-    protected $isActive;
+    private $isActive;
 
-    public function __construct() {
+    public function __construct($username, $password, $email) {
         $this->isActive = true;
-        $this->salt = '';
+        $this->roles = ['ROLE_USER'];
+        $this->username = $username;
+        $this->setPassword($password);
+        $this->email = $email;
     }
     
     public function __toString()
@@ -61,39 +64,39 @@ class User implements UserInterface, \Serializable {
         return $this->username;
     }
 
-    function getUserId() {
+    public function getUserId() {
         return $this->userId;
     }
 
-    function getUsername() {
+    public function getUsername() {
         return $this->username;
     }
 
-    function setUsername($username) {
+    public function setUsername($username) {
         $this->username = $username;
     }
 
-    function getEmail() {
+    public function getEmail() {
         return $this->email;
     }
 
-    function getPassword() {
+    public function getPassword() {
         return $this->password;
     }
 
-    function getCreateDate() {
+    public function getCreateDate() {
         return $this->createDate;
     }
 
-    function setEmail($email) {
+    public function setEmail($email) {
         $this->email = $email;
     }
 
-    function setPassword($password) {
+    public function setPassword($password) {
         $this->password = password_hash($password, PASSWORD_BCRYPT);
     }
 
-    function setCreateDate($createDate) {
+    public function setCreateDate($createDate) {
         $this->createDate = $createDate;
     }
 
@@ -102,11 +105,11 @@ class User implements UserInterface, \Serializable {
     }
 
     public function getRoles() {
-        return ['ROLE_USER'];
+        return $this->roles;
     }
 
     public function getSalt() {
-        return $this->salt;
+        return null;
     }
 
     public function serialize() {
