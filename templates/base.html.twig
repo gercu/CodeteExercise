@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('build/favicon.ico') }}" />
+
+    </head>
+    <body>
+    {% block body %}{% endblock %}
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
+    {% endblock %}
+</body>
+</html>

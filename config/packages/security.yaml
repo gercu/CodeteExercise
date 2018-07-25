@@ -1,0 +1,43 @@
+security:
+    encoders:
+        App\Document\User: bcrypt
+    providers:
+        doctrine_mongodb:
+            mongodb: 
+                class: App\Document\User
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            provider: doctrine_mongodb
+            http_basic: ~
+            pattern: ^/
+            
+            anonymous: true
+
+            form_login:
+                # The route name that the login form submits to
+                check_path: security_login
+                # The name of the route where the login form lives
+                # When the user tries to access a protected page, they are redirected here
+                login_path: security_login
+                # Secure the login form against CSRF
+                csrf_token_generator: security.csrf.token_manager
+                # The page users are redirect to when there is no previous page stored in the
+                # session (for example when the users access directly to the login page).
+                default_target_path: homepage
+                
+            logout:
+                # The route name the user can go to in order to logout
+                path: security_logout
+                # The name of the route to redirect to after logging out
+                target: security_login
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+         
