@@ -12,17 +12,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, \Serializable {
 
     /**
-     * @MongoDB\Id
+     * @MongoDB\Id(strategy="INCREMENT", type="int")
      */
     private $userId;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="string") @MongoDB\UniqueIndex
      */
     private $username;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="string") @MongoDB\UniqueIndex
      */
     private $email;
 
