@@ -4,7 +4,6 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Security\Core\User\UserInterface;
-//use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * @MongoDB\Document(repositoryClass="App\Repository\UserRepository")
