@@ -14,6 +14,8 @@ class SecurityController extends AbstractController {
 
     /**
      * @Route("/login", methods={"GET", "POST"}, name="security_login")
+     * @param AuthenticationUtils $helper
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function loginPageAction(AuthenticationUtils $helper) {     
         
@@ -31,9 +33,12 @@ class SecurityController extends AbstractController {
     {
         throw new \Exception('This should never be reached!');
     }
-    
+
     /**
      * @Route("/register", methods={"POST"}, name="security_register")
+     * @param Request $request
+     * @param DocumentManager $dm
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function registerAction(Request $request, DocumentManager $dm)
     {
@@ -45,8 +50,6 @@ class SecurityController extends AbstractController {
         
         $dm->persist($user);
         $dm->flush();
-        
-        $this->redirectToRoute('security_login');
         
         return $this->redirectToRoute('security_login');
     }
